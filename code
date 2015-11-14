@@ -1,0 +1,56 @@
+// Cambia formato de fecha de una celda en una hoja de cálculo vinculada a un formulario
+// versión 0.2 / fecha 14-11-2015 / autor: Luis Tomás Escolar / bitschips@gmail.com
+// IMPORTANTE: Para que te funcione debes incluir el ID de tu hoja de cálculo...
+
+function Aplicar_formato_fecha() {
+ 
+// aquí tienes que copiar el ID de tu hoja de cálculo 
+var id='19Spq0AN8dHQcsX14dSccP3_WvaolldGYQA8wbGss0o8';
+
+// número de la columna donde se guarda el campo fecha
+var columna_fecha = 5;
+
+// número de columna donde se escribe el texto de pruebas
+var columna_ok= 7;
+    
+// estas tres líneas son opcionales, me permiten conocer la cuota de correo disponible    
+// y escriben este valor en la columna, útil para depurar errores..
+
+var emailQuotaRemaining = MailApp.getRemainingDailyQuota();
+Logger.log("Remaining email quota: " + emailQuotaRemaining);
+WriteSS(OpenSS(id),LastRow(id),columna_ok,'OK-confirmado',' '+emailQuotaRemaining+' ',25);
+
+// en la última fecha introducida cambia el formato  
+WriteSSF(OpenSS(id),LastRow(id),columna_fecha);
+       }
+
+//------ algunas funciones auxiliares
+
+// esta función aplica el formato día-mes(texto)-año a la última celda
+function WriteSSF(ss, row, col) {
+var sheet = ss.getSheets()[0];
+var cell = sheet.getRange(row,col);
+cell.setNumberFormat("dd mmmm yyyy");
+}
+
+// esta función escribe un dato en una celda
+function WriteSS(ss, row, col, data, pre, ancho){
+var sheet = ss.getSheets()[0];
+var cell = sheet.getRange(row,col);
+cell.setValue(pre + data);
+} 
+
+// esta función abre la hoja de cálculo
+function OpenSS(id) {
+var ss = SpreadsheetApp.openById(id);
+//var ss1 = ss.getSheets()[0];
+//var sheet = ss.getActiveSpreadsheet();
+return ss;
+}
+
+// esta función obtiene la última fila añadida
+function LastRow (id) {
+var ss = OpenSS(id);
+var num_row = ss.getLastRow();
+return num_row;
+}
