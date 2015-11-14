@@ -5,7 +5,7 @@
 function Aplicar_formato_fecha() {
  
 // aquí tienes que copiar el ID de tu hoja de cálculo 
-var id='19Spq0AN8dHQcsX14dSccP3_WvaolldGYQA8wbGss0o8';
+var id='19Spq0AN8dHQcsX14dSccP3_WvaolldGYQA8wbG';
 
 // número de la columna donde se guarda el campo fecha
 var columna_fecha = 5;
